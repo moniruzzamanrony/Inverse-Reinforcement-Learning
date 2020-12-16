@@ -30,6 +30,8 @@ def irl_gradient_ascent(sample_trajectories, feature_matrix, feature_e, scaler, 
     '''
     Relative Entropy Inverse Reinforcement Learning
     '''
+    print('feature_matrix='+feature_matrix)
+    print('feature_e='+feature_e)
     feature_expectation = feature_e
     diff = 10000
     last_diff = 0
@@ -231,11 +233,11 @@ def trajs_2_states(trajs):
 
 # In[8]:load
 def load(month):
-    trajectories = pickle.load(open("D:/Software Engineering/thesis/Driver/mdp_trajs_07.pkl", 'rb'))
+    trajectories = pickle.load(open("D:/Software Engineering/thesis/Driver/datas/mdp_trajs_07.pkl", 'rb'))
     states, actions, state_action = trajs_2_states(trajectories)
-    profile_info = pickle.load(open("D:/Software Engineering/thesis/Driver/profile_info.pkl", 'rb'))
+    profile_info = pickle.load(open("D:/Software Engineering/thesis/Driver/datas/profile_info.pkl", 'rb'))
     [fa, mf, hl, bt] = profile_info
-    hf = pickle.load(open('D:/Software Engineering/thesis/Driver/profile_info.pkl', 'rb'))
+    hf = pickle.load(open('D:/Software Engineering/thesis/Driver/datas/profile_info.pkl', 'rb'))
     return states, actions, state_action, trajectories, mf, fa, hl, bt, hf
 
 
@@ -345,8 +347,6 @@ def match_feature_tr(trajs, hf0, mf0, fa0):
 
 
 # In[5]:Main Method
-
-
 month = '07'
 states_plates, actions_plates, state_action_plates, trajectories_plates, mf_plates, fa_plates, hl_plates, bt_plates, hf = load(
     month=month)
@@ -378,7 +378,7 @@ for plate in sample_plates[:]:
                                      feature_e=feature_e_, sample_trajectories=t_all, thre=1e-7,
                                      base_p=exam_mdp_1_plate.uniform_policy, execu_p=ori_policy_, show_flag=False,
                                      show_count=20000)
-    pickle.dump(re_, open('D:/Software Engineering/thesis/Driver/mdp_trajs_07.pkl', 'wb'))
+    pickle.dump(re_, open('D:/Software Engineering/thesis/Driver/datas/mdp_trajs_07.pkl', 'wb'))
     theta_plates_[plate] = re_
     print(k, '*******************', (datetime.datetime.now() - t1), (datetime.datetime.now() - t0))
 
